@@ -1,0 +1,79 @@
+<odoo>
+    <template id="report_training">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+        		<t t-call="web.external_layout">
+            		<div class="page">
+            			<div class="row">
+            				<div class="col-12 text-center">
+            					<h1><strong><span t-field="o.name"/></strong></h1>
+            				</div>
+            			</div>
+            			<p>
+                			<div class="row">
+	                			<div class="col-3">
+	                				Trainer:
+	                			</div>
+	                			<div class="col-3">
+	                				<span t-field="o.trainer_id"/>
+	                			</div>
+                			</div>
+                			<div class="row">
+	                			<div class="col-3">
+	                				Total Attendes:
+	                			</div>
+	                			<div class="col-3">
+	                				<span t-field="o.total_attendees"/>
+	                			</div>
+                			</div>
+            			</p>
+            			<br>
+                			 <table class="table">
+				                <thead>
+				                    <tr>
+				                        <th>Attendee</th>
+				                        <th>Phone</th>
+				                    </tr>
+				                </thead>
+				                <tbody>
+				                    <t t-foreach="o.attendee_ids" t-as="line">
+				                    	<tr>
+			                                <td>
+			                                    <span t-field="line.attendee_id"/>
+			                                </td>
+			                                <td>
+			                                    <span t-field="line.phone"/>
+			                                </td>
+				                        </tr>
+				                    </t>
+				                </tbody>
+				            </table>
+			        	</br>
+            		</div>
+        		</t>
+            </t>
+        </t>
+    </template>
+
+    <record id="training_report" model="ir.actions.report">
+        <field name="name">Training Report</field>
+        <field name="model">training.module</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">training.report_training</field>
+        <field name="report_file">training.report_training</field>
+        <field name="binding_model_id" ref="model_training_module"/>
+        <field name="binding_type">report</field>
+    </record>	
+
+    <!-- <report
+        id="training_report"
+        model="training.module"
+        string="Training Attendee"
+        report_type="pdf-html"
+        name="training.report_training"
+        file="training.report_training"
+        print_report_name="'Training Attendee'"
+    /> -->
+
+            <!-- print_report_name="'Training Attendee - %s' % (object.name).replace('/', '')" -->
+</odoo>

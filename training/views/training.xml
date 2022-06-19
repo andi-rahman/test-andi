@@ -1,0 +1,162 @@
+<odoo>
+    <record id="training_course_view_form" model="ir.ui.view">
+        <field name="name">training.form</field>
+        <field name="model">training.module</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_create_multi_attandee" class="oe_highlight" type="object" string="Create Multi Attandee"/>
+                    <button name="action_create_partner" type="object" string="Create Attandee"/>
+                    <button name="update_state" type="object" string="Submit" attrs="{'invisible': [('state','=', 'inprogress')]}"/>
+                    <button name="update_state" type="object" string="In Progress" attrs="{'invisible': [('state','!=', 'inprogress')]}"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <label for="name"/>
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="training_number"/>
+                            <field name="date"/>
+                            <field name="trainer_id"/>
+                            <field name="assistant_ids"/>
+                        </group>
+                        <group>
+                            <field name="total_attendees"/>
+                            <field name="total_attendees_presence"/>
+                            <field name="registration_amount"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Attendess">
+                            <field name="attendee_ids">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="is_select"/>
+                                    <field name="attendee_id"/>
+                                    <field name="training_id"/>
+                                    <field name="phone"/>
+                                    <field name="presence"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="attendee_id"/>
+                                            <field name="training_id"/>
+                                        </group>
+                                        <group>
+                                            <field name="phone"/>
+                                            <field name="presence"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                    <field name="description"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="training_course_view_tree" model="ir.ui.view">
+        <field name="name">training.tree</field>
+        <field name="model">training.module</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="date"/>
+                <field name="total_attendees"/>
+                <field name="registration_amount"/>
+                <field name="trainer_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="training_course_view_kanban" model="ir.ui.view">
+        <field name="name">training.module.kanban</field>
+        <field name="model">training.module</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="row">
+                                <div t-if="record.name.value" class="col-6 text-center">
+                                    <strong>Name</strong>
+                                </div>
+                                <div t-if="record.trainer_id.value" class="col-6 text-center">
+                                    <strong>Trainer</strong>
+                                </div>
+                                <div t-if="record.name.value" class="col-6 text-center">
+                                    <field name="name"/>
+                                </div>
+                                <div t-if="record.trainer_id.value" class="col-6 text-center">
+                                    <field name="trainer_id"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="training_course_view_calendar">
+        <field name="name">training.module.calendar</field>
+        <field name="model">training.module</field>
+        <field name="arch" type="xml">
+            <calendar string="Scheduled" date_start="date">
+                <field name="name"/>
+                <field name="trainer_id"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="training_course_view_graph" model="ir.ui.view">
+         <field name="name">training.module.graph</field>
+         <field name="model">training.module</field>
+         <field name="arch" type="xml">
+             <graph string="Training">
+                 <field name="name"/>
+                 <field name="total_attendees" type="measure"/>
+             </graph>
+         </field>
+    </record>
+
+    <record id="training_course_res_users_inherit" model="ir.ui.view">
+         <field name="name">res.users.inherit</field>
+         <field name="model">res.users</field>
+         <field name="inherit_id" ref="base.view_users_form"/>
+         <field name="arch" type="xml">
+             <xpath expr="//form/sheet/notebook/page[@name='access_rights']" position="after">
+                <page string="Training">
+                    <field name="training_ids"/>
+                </page>
+             </xpath>
+         </field>
+    </record>
+
+    <record id="action_training_view" model="ir.actions.act_window">
+        <field name="name">Training</field>
+        <field name="res_model">training.module</field>
+        <!-- <field name="view_type">form</field> -->
+        <field name="view_mode">tree,form,kanban,calendar,graph</field>
+        <field name="help" type="html">
+          <p>
+            Add a new Training
+          </p>
+        </field>
+    </record>
+
+    <!-- base -->
+    <menuitem id="training_menu_root" name="Training"/>
+    <!-- urutan 2 -->
+    <menuitem id="training_menu" name="Training"  parent="training_menu_root"/>
+    <!-- sub menu -->
+    <menuitem id="training_menu_sub_1" name="Training Sub 1" action="action_training_view" parent="training_menu"/>
+    <menuitem id="training_menu_sub_2" name="Training Sub 2" action="action_training_view" parent="training_menu"/>
+</odoo>
