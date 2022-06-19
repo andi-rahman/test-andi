@@ -147,7 +147,7 @@
         <field name="view_mode">tree,form,kanban,calendar,graph</field>
         <field name="help" type="html">
           <p>
-            Add a new Training
+            Add a new Trainings
           </p>
         </field>
     </record>
