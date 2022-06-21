@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="daftar_buku_view_form" model="ir.ui.view">
+            <field name="name">daftar.buku.view.form</field>
+            <field name="model">daftar.buku</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <field name="image" widget='image' class="oe_avatar"/>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" default_focus="1" placeholder="Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="harga_pinjam"/>
+                            </group>
+                        </group>
+                        <notebook colspan="4">
+                            <page name='sinopsis' string="Sinopsis">
+                                <field name="sinopsis" placeholder="Sinopsis..."/>
+                            </page>
+                        </notebook>      
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="daftar_buku_view_tree" model="ir.ui.view">
+            <field name="name">daftar.buku.view.tree</field>
+            <field name="model">daftar.buku</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="image" widget="image"/>
+                    <field name="name"/>
+                    <field name="harga_pinjam"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_buku_view" model="ir.actions.act_window">
+            <field name="name">Daftar Buku</field>
+            <field name="res_model">daftar.buku</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('perpustakaan.daftar_buku_view_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('perpustakaan.daftar_buku_view_form')})]"/>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p>
+                Add a Book
+              </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

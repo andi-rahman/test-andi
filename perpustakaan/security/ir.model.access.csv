@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_peminjaman_buku,access_peminjaman_buku,model_peminjaman_buku,base.group_user,1,1,1,1
+access_daftar_buku,access_daftar_buku,model_daftar_buku,base.group_user,1,1,1,1
